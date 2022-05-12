@@ -2,13 +2,13 @@
 //---Player 1 stats---//
 var playerName = window.prompt("What is your robot's name?");
 var playerHealth = 100;
-var playerAttack = 15;
+var playerAttack = 10;
 var playerMoney = 10;
 
 //---NPC STATS---///
 var enemyNames = ['Roborto', 'Amy Android', 'Robo Trumble'];
 var enemyHealth = 50;
-var enemyAttack = 12;
+var enemyAttack = 40;
 
 
 //---This creates a function named "fight"---//
@@ -54,8 +54,12 @@ var fight = function(enemyName) {
 }      
 
 
-//--Player skips fight--//
- 
+//--Start Game Function--//
+var startGame = function() {
+ playerHealth = 100;
+ playerAttack = 10;
+ playerMoney = 10;
+
 for (var i = 0; i < enemyNames.length; i++) {
     if(playerHealth > 0) {
         window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
@@ -63,9 +67,31 @@ for (var i = 0; i < enemyNames.length; i++) {
     enemyHealth = 50;
     fight(pickedEnemyName);
   }
-
   else {
       window.alert("Your robot has been defeated :(");
       break;
+    }
   }
+  //play again
+  endGame();
 }
+
+var endGame = function() {
+    if (playerHealth > 0) {
+        window.alert("Great job! You've survived the game! You now have a score of " + playerMoney + ".");
+    }
+    else {
+        window.alert("You've lost your robot in battle.")
+    }
+
+    var playAgainConfirm = window.confirm("Would You like to play again?");
+        if (playAgainConfirm) {
+            startGame();
+        }
+        else {
+            window.alert("Thank you for playing! Come back again soon!");
+        }
+}
+
+//Start Game//
+startGame();
