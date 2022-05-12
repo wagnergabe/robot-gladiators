@@ -8,53 +8,7 @@ var randomNumber = function(min, max) {
     return value;
 };
 
-//---Player 1 stats---//
-var playerInfo = {
-    name: window.prompt("What is your robot's name?"),
-    health: 100,
-    attack: 10,
-    money: 10,
-    reset: function () {
-        this.health = 100;
-        this.money = 10;
-        this.attack = 10;
-    },
-    refillHealth: function () {
-      if (this.money >= 7) {
-          window.alert("refilling player's health by 20 for 7 coins");
-        this.health += 20;
-        this.money -= 7;
-      }
-      else {
-          window.alert("You need more coins");
-      }
-    },
-    upgradeAttack: function () {
-      if (this.money >= 7) {
-          window.alert("upgrading player's attack by 6 for 7 coins")
-        this.attack += 6;
-        this.money -= 7;
-      }
-      else {
-          window.alert("Come back with more coins!");
-      }
-    }
-  };
-//---NPC STATS---///
-var enemyInfo = [
-    {
-      name: "Roborto",
-      attack: randomNumber(10, 14)
-    },
-    {
-      name: "Amy Android",
-      attack: randomNumber(10, 14)
-    },
-    {
-      name: "Robo Trumble",
-      attack: randomNumber(10, 14)
-    }
-  ];
+
 
 //---This creates a function named "fight"---//
 
@@ -174,6 +128,64 @@ var shop = function () {
     }
 };
 
+//--function to set name--//
+var getPlayerName = function () {
+    var name = "";
+
+    while (name === "" || name === null) {
+        name = prompt("What is your robot's name?");
+    }
+    console.log(`Your robot's name is ${name}`);
+    return name;
+};
+
+//---Player 1 stats---//
+var playerInfo = {
+    name: getPlayerName(),
+    health: 100,
+    attack: 10,
+    money: 10,
+    reset: function () {
+        this.health = 100;
+        this.money = 10;
+        this.attack = 10;
+    },
+    refillHealth: function () {
+      if (this.money >= 7) {
+          window.alert("refilling player's health by 20 for 7 coins");
+        this.health += 20;
+        this.money -= 7;
+      }
+      else {
+          window.alert("You need more coins");
+      }
+    },
+    upgradeAttack: function () {
+      if (this.money >= 7) {
+          window.alert("upgrading player's attack by 6 for 7 coins")
+        this.attack += 6;
+        this.money -= 7;
+      }
+      else {
+          window.alert("Come back with more coins!");
+      }
+    }
+  };
+//---NPC STATS---///
+var enemyInfo = [
+    {
+      name: "Roborto",
+      attack: randomNumber(10, 14)
+    },
+    {
+      name: "Amy Android",
+      attack: randomNumber(10, 14)
+    },
+    {
+      name: "Robo Trumble",
+      attack: randomNumber(10, 14)
+    }
+  ];
 
 
 //Start Game//
