@@ -34,6 +34,7 @@ var fight = function(enemyName) {
         
     if (enemyHealth <= 0) {
         window.alert(`${enemyName} has been defeated!`);
+        playerMoney = playerMoney + 10;
         break;
 
         } else {
@@ -56,7 +57,15 @@ var fight = function(enemyName) {
 //--Player skips fight--//
  
 for (var i = 0; i < enemyNames.length; i++) {
+    if(playerHealth > 0) {
+        window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
     var pickedEnemyName = enemyNames[i];
     enemyHealth = 50;
     fight(pickedEnemyName);
   }
+
+  else {
+      window.alert("Your robot has been defeated :(");
+      break;
+  }
+}
