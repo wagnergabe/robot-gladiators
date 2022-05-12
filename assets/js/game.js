@@ -8,100 +8,75 @@ var randomNumber = function(min, max) {
     return value;
 };
 
-//---Player 1 stats---//
-var playerInfo = {
-    name: window.prompt("What is your robot's name?"),
-    health: 100,
-    attack: 10,
-    money: 10,
-    reset: function () {
-        this.health = 100;
-        this.money = 10;
-        this.attack = 10;
-    },
-    refillHealth: function () {
-      if (this.money >= 7) {
-          window.alert("refilling player's health by 20 for 7 coins");
-        this.health += 20;
-        this.money -= 7;
-      }
-      else {
-          window.alert("You need more coins");
-      }
-    },
-    upgradeAttack: function () {
-      if (this.money >= 7) {
-          window.alert("upgrading player's attack by 6 for 7 coins")
-        this.attack += 6;
-        this.money -= 7;
-      }
-      else {
-          window.alert("Come back with more coins!");
-      }
+var fightOrSkip = function() {
+    var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? enter 'FIGHT' or 'SKIP' to choose");
+
+if (promptFight === "" || promptFight === null) {
+    window.alert("Your need to provide a valid answer! please try again.");
+    return fightOrSkip();
+}
+
+promptFight = promptFight.toLowerCase();
+
+    if (promptFight === 'skip') {
+        var confirmSkip = window.confirm ("Are you sure you want to quit?");
+
+        if(confirmSkip) {
+            window.alert(playerInfo.name + " has decided to skip the battle.");
+            playerInfo.money = Math.max(0, playerInfo.money - 10);
+            return true;
+        }
     }
-  };
-//---NPC STATS---///
-var enemyInfo = [
-    {
-      name: "Roborto",
-      attack: randomNumber(10, 14)
-    },
-    {
-      name: "Amy Android",
-      attack: randomNumber(10, 14)
-    },
-    {
-      name: "Robo Trumble",
-      attack: randomNumber(10, 14)
-    }
-  ];
+    return false;
+};
+
 
 //---This creates a function named "fight"---//
 
 var fight = function(enemy) {
     
+    var isPlayerTurn = true;
+        if(Math.random() > 0.5) {
+            isPlayerTurn = false;
+        }
 
     while (playerInfo.health > 0 && enemy.health > 0) {
-
-        var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? enter 'FIGHT' or 'SKIP' to choose");
-
-        if (promptFight === "skip" || promptFight === "SKIP") {
-
-            var confirmSkip = window.confirm("Are you sure you want to skip?");
-            if (confirmSkip) {
-                window.alert(`${playerInfo.name} has chosen to skip the fight`);
-                playerInfo.money = Math.max(0, playerInfo.money - 10);
-                console.log("playerInfo.money", playerInfo.money);
+        if(isPlayerTurn) {
+            if(fightOrSkip()) {
                 break;
             }
-        }
+            
         //--Player 1 attacks--//
         var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
+
         enemy.health = Math.max(0, enemy.health - damage);
         console.log(`${playerInfo.name} has attacked ${enemy.name}, ${enemy.name} now has ${enemy.health} health left!`);
 
         if (enemy.health <= 0) {
             window.alert(`${enemy.name} has been defeated!`);
-            playerInfo.money = playerInfo.money + 10;
+            playerInfo.money = playerInfo.money + 20;
             break;
 
         } else {
             window.alert(`${enemy.name} has ${enemy.health} health remaning`);
         }
 
+        }else {
+            var damage = randomNumber(enemy.attack - 3, enemy.attack);
+            playerInfo.health = Math.max(0, playerInfo.health - damage);
+            console.log(`${enemy.name} attacked ${playerInfo.name}. ${playerInfo.name} now has ${playerInfo.health} remaning`);
+
         //--NPC attacks--//
-        var damage = randomNumber(enemy.attack - 3, enemy.attack);
-        playerInfo.health = Math.max(0, playerInfo.health - damage);
-        console.log(`${enemy.name} has attacked ${playerInfo.name}, ${playerInfo.name} now has ${playerInfo.health} remaining!`);
         if (playerInfo.health <= 0) {
-            window.alert(`${playerInfo.name} has vanquished`);
+            window.alert(`${playerInfo.name} has died!`);
             break;
         } else {
-            window.alert(`${playerInfo.name} has ${playerInfo.health} remaining`);
-        }
+            window.alert(`${playerInfo.name} still has ${playerInfo.health} health remaning`)
+        } 
     }
-}      
-
+    isPlayerTurn = !isPlayerTurn;
+  }      
+};
 
 //--Start Game Function--//
 
@@ -172,6 +147,55 @@ shopOptionPrompt = parseInt(shopOptionPrompt);
             break;
     }
 };
+
+
+//---Player 1 stats---//
+var playerInfo = {
+    name: window.prompt("What is your robot's name?"),
+    health: 100,
+    attack: 10,
+    money: 10,
+    reset: function () {
+        this.health = 100;
+        this.money = 10;
+        this.attack = 10;
+    },
+    refillHealth: function () {
+      if (this.money >= 7) {
+          window.alert("refilling player's health by 20 for 7 coins");
+        this.health += 20;
+        this.money -= 7;
+      }
+      else {
+          window.alert("You need more coins");
+      }
+    },
+    upgradeAttack: function () {
+      if (this.money >= 7) {
+          window.alert("upgrading player's attack by 6 for 7 coins")
+        this.attack += 6;
+        this.money -= 7;
+      }
+      else {
+          window.alert("Come back with more coins!");
+      }
+    }
+  };
+//---NPC STATS---///
+var enemyInfo = [
+    {
+      name: "Roborto",
+      attack: randomNumber(10, 14)
+    },
+    {
+      name: "Amy Android",
+      attack: randomNumber(10, 14)
+    },
+    {
+      name: "Robo Trumble",
+      attack: randomNumber(10, 14)
+    }
+  ];
 
 
 
