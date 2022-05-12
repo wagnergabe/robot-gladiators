@@ -10,55 +10,67 @@ var enemyNames = ['Roborto', 'Amy Android', 'Robo Trumble'];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
+//function to generate a random numeric value
+var randomNumber = function(min, max) {
+    var value = Math.floor(Math.random() * (max - min + 1) + min);
+
+    return value;
+};
+
 
 //---This creates a function named "fight"---//
 
-var fight = function(enemyName) {
-    while(playerHealth > 0 && enemyHealth > 0) {
+function fight(enemyName) {
+
+    while (playerHealth > 0 && enemyHealth > 0) {
 
         var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? enter 'FIGHT' or 'SKIP' to choose");
 
         if (promptFight === "skip" || promptFight === "SKIP") {
 
             var confirmSkip = window.confirm("Are you sure you want to skip?");
-                if (confirmSkip) {
-                    window.alert(`${playerName} has chosen to skip the fight`);
-                        playerMoney = playerMoney - 10;
-                            console.log("playerMoney", playerMoney);
-                                break;
+            if (confirmSkip) {
+                window.alert(`${playerName} has chosen to skip the fight`);
+                playerMoney = Math.max(0, playerMoney - 10);
+                console.log("playerMoney", playerMoney);
+                break;
             }
         }
-//--Player 1 attacks--//
-    enemyHealth = enemyHealth - playerAttack;
-    console.log(`${playerName} has attacked ${enemyName}, ${enemyName} now has ${enemyHealth} health left!`);
-        
-    if (enemyHealth <= 0) {
-        window.alert(`${enemyName} has been defeated!`);
-        playerMoney = playerMoney + 10;
-        break;
+        //--Player 1 attacks--//
+        var damage = randomNumber(playerAttack - 3, playerAttack);
+        enemyHealth = Math.max(0, enemyHealth - damage);
+        console.log(`${playerName} has attacked ${enemyName}, ${enemyName} now has ${enemyHealth} health left!`);
+
+        if (enemyHealth <= 0) {
+            window.alert(`${enemyName} has been defeated!`);
+            playerMoney = playerMoney + 10;
+            break;
 
         } else {
-        window.alert(`${enemyName} has ${enemyHealth} health remaning`);
+            window.alert(`${enemyName} has ${enemyHealth} health remaning`);
         }
 
-//--NPC attacks--//
-    playerHealth = playerHealth - enemyAttack;
-    console.log(`${enemyName} has attacked ${playerName}, ${playerName} now has ${playerHealth} remaining!`);
-    if (playerHealth <= 0) {
-        window.alert(`${playerName} has vanquished`);
-        break;
+        //--NPC attacks--//
+        var damage = randomNumber(enemyAttack - 3, enemyAttack);
+        playerHealth = Math.max(0, playerHealth - damage);
+        console.log(`${enemyName} has attacked ${playerName}, ${playerName} now has ${playerHealth} remaining!`);
+        if (playerHealth <= 0) {
+            window.alert(`${playerName} has vanquished`);
+            break;
         } else {
-        window.alert (`${playerName} has ${playerHealth} remaining`);
+            window.alert(`${playerName} has ${playerHealth} remaining`);
         }
-      }
+    }
 }      
 
 
 //--Start Game Function--//
+
 var startGame = function() {
  playerHealth = 100;
  playerAttack = 10;
  playerMoney = 10;
+ enemyHealth = randomNumber(40, 60);
 
 for (var i = 0; i < enemyNames.length; i++) {
     if(playerHealth > 0) {
@@ -139,6 +151,8 @@ var shop = function () {
             break;
     }
 };
+
+
 
 //Start Game//
 startGame();
